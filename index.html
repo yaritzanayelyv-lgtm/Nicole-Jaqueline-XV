@@ -1846,16 +1846,16 @@ const EVENT = {
     maps: "https://maps.app.goo.gl/9M6S9iML8WEEC4nL8",
   },
   reception: {
-    time: "5:00 PM",
+    time: "6:00 PM",
     place: "Salón Camino Real",
     address: "Plan de la Vieja, 93829 Misantla, Ver.",
     maps: "https://maps.app.goo.gl/miLvv1jKLY6CUwCd8",
   },
   timeline: [
     { time: "4:00 PM", name: "Misa", desc: "Ceremonia religiosa en la Parroquia de la Asunción." },
-    { time: "5:00 PM", name: "Recepción", desc: "Coctel y bienvenida en el Salón Camino Real." },
-    { time: "6:00 PM", name: "Vals", desc: "La entrada de Nicole y el baile sorpresa." },
-    { time: "7:00 PM", name: "Cena", desc: "Compartimos la mesa y los buenos deseos." },
+    { time: "6:00 PM", name: "Recepción", desc: "Coctel y bienvenida en el Salón Camino Real." },
+    { time: "7:00 PM", name: "Vals", desc: "La entrada de Nicole y el baile sorpresa." },
+    { time: "8:00 PM", name: "Cena", desc: "Compartimos la mesa y los buenos deseos." },
     { time: "9:00 PM", name: "¡A bailar!", desc: "La fiesta hasta el final de la noche." },
   ],
 };
@@ -2166,9 +2166,11 @@ function Padrinos() {
    RSVP
    ============================================================ */
 function Rsvp({ guest }) {
+  const seats = guest.seats && guest.seats > 0 ? guest.seats : 2;
   const msg = encodeURIComponent(
     `¡Hola! Confirmo mi asistencia a los XV Años de Nicole Jaquelin. ` +
-    (guest.name ? `Soy ${guest.name}. ` : "") +
+    (guest.name ? `Soy ${guest.name} ` : "Asistiremos ") +
+    `y confirmo ${seats} ${seats === 1 ? "lugar" : "lugares"}. ` +
     `¡Ahí estaré! 🌸`
   );
   const link = `https://wa.me/${EVENT.whatsapp}?text=${msg}`;
