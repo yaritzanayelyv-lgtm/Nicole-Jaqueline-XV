@@ -698,9 +698,39 @@ img { display: block; max-width: 100%; }
 .rsvp-card .btn-wine {
   background: var(--cream);
   color: var(--wine);
-  margin-top: 24px;
+  margin-top: 0;
 }
 .rsvp-card .btn-wine:hover { background: #fff; }
+.rsvp-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+.btn-decline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: 1.5px solid rgba(253, 246, 240, 0.55);
+  border-radius: 999px;
+  background: transparent;
+  color: #f4dde2;
+  font-family: var(--serif-body);
+  font-weight: 500;
+  font-size: clamp(0.98rem, 3vw, 1.1rem);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+}
+.btn-decline:hover {
+  background: rgba(253, 246, 240, 0.12);
+  border-color: rgba(253, 246, 240, 0.85);
+  color: #fff;
+}
 .rsvp-note { margin-top: 16px; font-size: 0.95rem; color: #eccdd4; letter-spacing: 0.04em; }
 
 /* ===========================================================
@@ -2169,13 +2199,20 @@ function Padrinos() {
    ============================================================ */
 function Rsvp({ guest }) {
   const seats = guest.seats && guest.seats > 0 ? guest.seats : 2;
-  const msg = encodeURIComponent(
+  const msgYes = encodeURIComponent(
     `¡Hola! Confirmo mi asistencia a los XV Años de Nicole Jaquelin. ` +
     (guest.name ? `Soy ${guest.name} ` : "Asistiremos ") +
     `y confirmo ${seats} ${seats === 1 ? "lugar" : "lugares"}. ` +
     `¡Ahí estaré! 🌸`
   );
-  const link = `https://wa.me/${EVENT.whatsapp}?text=${msg}`;
+  const msgNo = encodeURIComponent(
+    `¡Hola! Muchas gracias por la invitación a los XV Años de Nicole Jaquelin. ` +
+    (guest.name ? `Soy ${guest.name}. ` : "") +
+    `Lamentablemente esta vez no podré acompañarlos. ` +
+    `Les deseo una noche preciosa. ¡Un fuerte abrazo! 🌸`
+  );
+  const linkYes = `https://wa.me/${EVENT.whatsapp}?text=${msgYes}`;
+  const linkNo = `https://wa.me/${EVENT.whatsapp}?text=${msgNo}`;
   return (
     <section className="section bg-cream" id="rsvp">
       <img className="destello-bg" src={__FRAME} alt="" aria-hidden="true" />
@@ -2185,13 +2222,18 @@ function Rsvp({ guest }) {
           <span className="eyebrow section-eyebrow">Confirma tu asistencia</span>
           <h2 className="section-title">¿Nos acompañas?</h2>
           <p className="body-lg" style={{ marginTop: 8 }}>
-            Tu confirmación nos ayuda a preparar cada detalle.
+            Tu respuesta nos ayuda a preparar cada detalle.
             Avísanos por WhatsApp <b style={{ fontWeight: 600 }}>a más tardar el 1.º de Julio</b>.
           </p>
-          <a className="btn-wine" href={link} target="_blank" rel="noopener">
-            <span style={{ width: 22, height: 22, display: "inline-flex" }}><IconWhatsApp /></span>
-            Confirmar por WhatsApp
-          </a>
+          <div className="rsvp-actions">
+            <a className="btn-wine" href={linkYes} target="_blank" rel="noopener">
+              <span style={{ width: 22, height: 22, display: "inline-flex" }}><IconWhatsApp /></span>
+              Sí, ahí estaré
+            </a>
+            <a className="btn-decline" href={linkNo} target="_blank" rel="noopener">
+              No podré asistir
+            </a>
+          </div>
           <p className="rsvp-note">✦ Fecha límite: 1.º de Julio de 2026 · {EVENT.whatsappPretty}</p>
         </div>
       </div>
